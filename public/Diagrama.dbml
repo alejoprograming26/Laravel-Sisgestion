@@ -1,0 +1,126 @@
+Table configuraciones{
+   id int [primary key, increment]
+   nombre varchar(255)
+   descripcion varchar(255)
+   direccion varchar(255)
+   telefono varchar(20)
+   divisa varchar(20)
+   correo_electronico varchar(255)
+   web varchar(255)
+   logo varchar(255)
+
+}
+Table gestiones{
+   id int [primary key, increment]
+   nombre varchar(255)
+
+}
+Table periodos{
+   id int [primary key, increment]
+   nombre varchar
+   gestion_id int [ref: > gestiones.id]
+
+}
+
+Table niveles{
+   id int [primary key, increment]
+   nombre varchar(255)
+
+}
+Table grados{
+   id int [primary key, increment]
+   nombre varchar(255)
+   nivel_id int [ref: > niveles.id]
+
+}
+Table paralelos{
+   id int [primary key, increment]
+   nombre varchar(255)
+   grado_id int [ref: > grados.id]
+}
+Table turnos{
+   id int [primary key, increment]
+   nombre varchar
+
+}
+Table materias{
+ id int [primary key, increment]
+ nombre varchar(255)
+}
+table user{
+ id int [primary key, increment]
+ nombre varchar(255)
+ email varchar(255)
+ password varchar(255)
+
+}
+Table personals{
+   id int [primary key, increment]
+   usario_id int [ref: > user.id]
+   tipo varchar
+   nombres varchar(255)
+   apellidos varchar(255)
+   Cedula varchar(20)
+   fecha_nacimiento date
+   direccion varchar(255)
+   telefono varchar(20)
+   profesion varchar(255)
+
+}
+
+Table formaciones{
+   id int [primary key, increment]
+   personal_id int [ref: > personals.id]
+   titulo varchar (255)
+   institucion varchar (255)
+   nivel varchar (255)
+   ano_graducaion date
+   archivo varchar (255)
+}
+Table ppffs{
+    id int [primary key, increment]
+    nombres varchar
+    apellidos varchar
+    ci varchar
+    fecha_nacimiento date
+    telefono varchar
+    parentesco varchar
+    ocupacion varchar
+    direccion varchar
+}
+Table estudiantes{
+    id int [primary key, increment]
+    usuario_id int [ref:> user.id]
+    ppffs_id int [ref:> ppffs.id]
+    nombres varchar
+    apellidos varchar
+    ci varchar
+    fecha_nacimiento date
+    telefono varchar
+    direccion varchar
+    foto varchar
+    estado enum
+
+}
+Table matriculaciones{
+   id int [pk, increment]
+   estudiante_id int [ref: > estudiantes.id]
+   turno_id int [ref: > turnos.id]
+   gestion_id int [ref: > gestiones.id]
+   nivel_id int [ref: > niveles.id]
+   grado_id int [ref: > grados.id]
+   paralelo_id int [ref: > paralelos.id]
+
+}
+Table asignaciones{
+   id int [pk, increment]
+   docente_id int [ref: > personals.id]
+   gestion_id int [ref: > gestiones.id]
+   nivel_id int [ref: > niveles.id]
+   grado_id int [ref: > grados.id]
+   paralelo_id int [ref: > paralelos.id]
+   materia_id int [ref: > materias.id]
+   turno_id int [ref: > turnos.id]
+   estado varchar(20)
+   fecha_asignacion date
+}
