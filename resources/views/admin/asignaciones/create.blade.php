@@ -356,7 +356,7 @@
 
                             $('#tabla_historial').html(tabla).show();
                         }else{
-                            $('#tabla_historial').html('<p>No se encontró historial académico</p>').show();                            
+                            $('#tabla_historial').html('<p>No se encontró historial académico</p>').show();
                         }
 
 
