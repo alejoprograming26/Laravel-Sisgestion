@@ -131,7 +131,7 @@
                 <div class="card-body">
                     <form action="{{ url('admin/asignaciones/create') }}" method="POST">
                         @csrf
-                        <input type="text" name="docente_id" id="docente_id" value=""  required>
+                        <input type="text" name="personal_id" id="personal_id" value="" hidden required>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -236,6 +236,26 @@
                                     @enderror
                                 </div>
                             </div>
+                             </div>
+                               <div class="col-md-12">
+                                <div class="form-group ">
+                                    <label for="">Asignar Materia</label><b>*</b>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-book"></i></span>
+                                        </div>
+                                        <select name="materia_id" id="materia_id" class="form-control select2" required>
+                                            <option value="">Seleccione una Materia</option>
+                                            @foreach($materias as $materia)
+                                                <option value="{{ $materia->id }}">{{ $materia->nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('materia_id')
+                                        <small style="color:red">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                         <hr>
                         <div class="row">
@@ -335,28 +355,29 @@
                         $('#email').html(docente.usuario.email);
                         $('#profesion').html(docente.profesion);
                         $('#docente_id').val(docente.id);
+                        $('#personal_id').val(docente.id);
                         $('#datos_docente').css('display', 'block');
 
-
-                        if(docente.formaciones && docente.matriculaciones.length > 0){
+                        var baseurl = "{{ url('/') }}";
+                        if(docente.formaciones && docente.formaciones.length > 0){
                             var tabla = '<table class="table table-bordered">';
                             tabla += '<thead><tr class="text-center"><th>Titulo</th><th>Institucion</th><th>Nivel</th><th>fecha Graduacion</th><th>Archivo</th></tr></thead>';
                             tabla += '<tbody>';
 
-                            docente.matriculaciones.forEach(function(matriculacion) {
+                            docente.formaciones.forEach(function(formacion) {
                                 tabla += '<tr class="text-center">' +
-                                    '<td>' + (matriculacion.turno.nombre || '') + '</td>' +
-                                    '<td>' + (matriculacion.gestion.nombre || '') + '</td>' +
-                                    '<td>' + (matriculacion.nivel.nombre || '') + '</td>' +
-                                    '<td>' + (matriculacion.grado.nombre || '') + '</td>' +
-                                    '<td>' + (matriculacion.paralelo.nombre || '') + '</td>' +
+                                    '<td>' + (formacion.titulo || '') + '</td>' +
+                                    '<td>' + (formacion.institucion || '') + '</td>' +
+                                    '<td>' + (formacion.nivel || '') + '</td>' +
+                                    '<td>' + (formacion.fecha_graduacion || '') + '</td>' +
+                                    '<td>' + '<a href="' + baseurl + '/' + formacion.archivo + '" target="_blank"><i class="fas fa-file-pdf"></i> Ver Archivo</a>' + '</td>' +
                                     '</tr>';
                             });
                             tabla += '</tbody></table>';
 
-                            $('#tabla_historial').html(tabla).show();
+                            $('#tabla_formacion').html(tabla).show();
                         }else{
-                            $('#tabla_historial').html('<p>No se encontró historial académico</p>').show();
+                            $('#tabla_formacion').html('<p>No se encontró Formacion académica del Docente</p>').show();
                         }
 
 

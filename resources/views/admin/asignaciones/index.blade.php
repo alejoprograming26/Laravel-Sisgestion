@@ -26,7 +26,14 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>Nr</th>
-
+                                    <th>Docente</th>
+                                    <th>Materia</th>
+                                    <th>Turno</th>
+                                    <th>Gestión</th>
+                                    <th>Nivel</th>
+                                    <th>Grado</th>
+                                    <th>Paralelo</th>
+                                    <th>Fecha Asignación</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -34,8 +41,14 @@
                                 @foreach ($asignaciones as $asignacion)
                                     <tr class="text-center">
                                         <td style="text-align: center">{{ $loop->iteration }}</td>
-
-
+                                        <td>{{ $asignacion->personal->nombres . ' ' . $asignacion->personal->apellidos }}</td>
+                                        <td>{{ $asignacion->materia->nombre }}</td>
+                                        <td>{{ $asignacion->turno->nombre }}</td>
+                                        <td>{{ $asignacion->gestion->nombre }}</td>
+                                        <td>{{ $asignacion->nivel->nombre }}</td>
+                                        <td>{{ $asignacion->grado->nombre }}</td>
+                                        <td>{{ $asignacion->paralelo->nombre }}</td>
+                                        <td>{{ $asignacion->fecha_asignacion }}</td>
                                         <td>
                                             <div class="row d-flex justify-content-center">
                                                  <a href="{{ url('/admin/asignaciones/' .$asignacion->id ) }}"

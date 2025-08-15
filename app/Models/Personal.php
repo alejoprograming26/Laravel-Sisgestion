@@ -27,5 +27,7 @@ class Personal extends Model
    public function formaciones(){
     return $this->hasMany(Formacion::class);
    }
-
+   public function asignaciones(){
+    return $this->hasMany(Asignacion::class);
+   }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('asignacions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('docente_id')->constrained('personals')->onDelete('cascade');
+            $table->foreignId('personal_id')->constrained('personals')->onDelete('cascade');
             $table->foreignId('gestion_id')->constrained('gestions')->onDelete('cascade');
             $table->foreignId('nivel_id')->constrained('nivels')->onDelete('cascade');
             $table->foreignId('grado_id')->constrained('grados')->onDelete('cascade');
