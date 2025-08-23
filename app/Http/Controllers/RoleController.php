@@ -41,6 +41,37 @@ class RoleController extends Controller
         ->with('mensaje', 'Rol creado exitosamente.')
         ->with('icono', 'success');
     }
+      public function permisos($id)
+    {
+        $rol = Role::findOrFail($id);
+        $permisos = Permission::all()->groupBy(function ($permiso) {
+            if(stripos($permiso->name, 'configuracion') !== false){return 'Configuraciones del Sistema'; }
+            if(stripos($permiso->name, 'gestion') !== false){return 'Gestiones del Sistema'; }
+            if(stripos($permiso->name, 'periodos') !== false){return 'Periodos del Sistema'; }
+            if(stripos($permiso->name, 'niveles') !== false){return 'Niveles del Sistema'; }
+            if(stripos($permiso->name, 'grados') !== false){return 'Grados del Sistema'; }
+            if(stripos($permiso->name, 'paralelos') !== false){return 'Paralelos del Sistema'; }
+            if(stripos($permiso->name, 'turnos') !== false){return 'Turnos del Sistema'; }
+            if(stripos($permiso->name, 'materias') !== false){return 'Materias del Sistema'; }
+            if(stripos($permiso->name, 'roles') !== false){return 'Roles del Sistema'; }
+            if(stripos($permiso->name, 'personal') !== false){return 'Personal del Sistema'; }
+            if(stripos($permiso->name, 'formaciones') !== false){return 'Formaciones del Personal del Sistema'; }
+            if(stripos($permiso->name, 'estudiantes') !== false){return 'Estudiantes del Sistema'; }
+            if(stripos($permiso->name, 'ppffs') !== false){return 'Padres de familia del Sistema'; }
+            if(stripos($permiso->name, 'matriculaciones') !== false){return 'Matriculaciones del Sistema'; }
+            if(stripos($permiso->name, 'asignaciones') !== false){return 'Asignaciones del Sistema'; }
+            if(stripos($permiso->name, 'pagos') !== false){return 'Pagos del Sistema'; }
+        });
+        return view('admin.roles.permisos', compact('rol', 'permisos'));
+    }
+     public function update_permisos(Request $request,$id)
+    {
+        $rol = Role::findOrFail($id);
+        $rol->permissions()->sync($request->input('permisos'));
+        return redirect()->route('admin.roles.index')
+            ->with('mensaje', 'Permisos actualizados exitosamente.')
+            ->with('icono', 'success');
+    }
 
     /**
      * Display the specified resource.

@@ -8,6 +8,8 @@ use App\Models\Personal;
 use App\Models\Turno;
 use App\Models\Gestion;
 use App\Models\Nivel;
+use App\Models\Grado;
+use App\Models\Paralelo;
 use App\Models\Materia;
 use Illuminate\Http\Request;
 
@@ -97,32 +99,88 @@ class AsignacionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Asignacion $asignacion)
+    public function show($id)
     {
-        //
+       $asignacion = Asignacion::with('personal', 'turno', 'gestion', 'nivel', 'grado', 'paralelo', 'materia')->find($id);
+       return view('admin.asignaciones.show', compact('asignacion'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Asignacion $asignacion)
+    public function edit($id)
     {
-        //
+        $asignacion= Asignacion::with('personal', 'turno', 'gestion', 'nivel', 'grado', 'paralelo', 'materia')->find($id);
+        $turnos = Turno::all();
+        $gestiones = Gestion::all();
+        $niveles = Nivel::all();
+        $grados = Grado::where('nivel_id', $asignacion->nivel_id)->get();
+        $paralelos = Paralelo::where('grado_id', $asignacion->grado_id)->get();
+        $docentes = Personal::where('tipo', 'docente')->get();
+        $materias = Materia::all();
+        return view('admin.asignaciones.edit', compact('docentes', 'turnos', 'gestiones', 'asignacion', 'niveles', 'grados', 'paralelos', 'materias'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Asignacion $asignacion)
+    public function update(Request $request,  $id)
     {
-        //
+
+      //$datos = request()->all();
+      //return response()->json($datos);
+      $asignacion = Asignacion::find($id);
+       $request->validate([
+            'personal_id' => 'required',
+            'turno_id' => 'required',
+            'gestion_id' => 'required',
+            'nivel_id' => 'required',
+            'grados_id' => 'required',
+            'paralelos_id' => 'required',
+            'fecha_asignacion' => 'required|date',
+            'materia_id' => 'required',
+        ]);
+
+            $asignacion_duplicada = Asignacion::where('personal_id', $request->personal_id)
+           ->where('turno_id', $request->turno_id)
+           ->where('gestion_id', $request->gestion_id)
+           ->where('nivel_id', $request->nivel_id)
+           ->where('grado_id', $request->grados_id)
+           ->where('paralelo_id', $request->paralelos_id)
+           ->where('materia_id', $request->materia_id)
+           ->where('id', '!=', $id)
+           ->exists();
+
+       if ($asignacion_duplicada) {
+           return redirect()->back()->with(['mensaje' => 'La Asignación ya existe',
+           'icono' => 'error']);
+       }
+
+       $asignacion->personal_id = $request->personal_id;
+       $asignacion->turno_id = $request->turno_id;
+       $asignacion->gestion_id = $request->gestion_id;
+       $asignacion->nivel_id = $request->nivel_id;
+       $asignacion->grado_id = $request->grados_id;
+       $asignacion->paralelo_id = $request->paralelos_id;
+       $asignacion->fecha_asignacion = $request->fecha_asignacion;
+       $asignacion->materia_id = $request->materia_id;
+       $asignacion->save();
+
+       return redirect()->route('admin.asignaciones.index')
+       ->with(['mensaje' => 'La Asignación se ha Actualizado correctamente',
+       'icono' => 'success']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Asignacion $asignacion)
+    public function destroy($id)
     {
-        //
+        $asignacion = Asignacion::find($id);
+        $asignacion->delete();
+        return redirect()->route('admin.asignaciones.index')
+            ->with(['mensaje' => 'La Asignación se ha eliminado correctamente',
+            'icono' => 'info']);
     }
 }

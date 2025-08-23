@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h1 style="font-weight: bold; font-size: 1.5rem">Asignaciones/Registro de Una Nueva Asignación</h1>
+    <h1 style="font-weight: bold; font-size: 1.5rem">Asignaciones/Datos de Una Asignación</h1>
     <hr>
 @stop
 
@@ -15,34 +15,14 @@
                     <h3 class="card-title">Datos del Docente</h3>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="">Buscar Docente</label><b>*</b>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                    </div>
-                                    <select class="form-control select2" name="docente" id="buscar_docente" required>
-                                        <option value="">Seleccione un Docente</option>
-                                        @foreach ($docentes as $docente)
-                                            <option value="{{ $docente->id }}">{{ $docente->apellidos }} {{ $docente->nombres }} - {{ $docente->ci }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                @error('docente')
-                                    <small style="color:red">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                   <div id="datos_docente" style="display: none;">
+
+                   <div id="datos_estudiante" >
                      <div class="row" >
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">Fotografia</label>
                                 <center>
-                                       <img id="foto" src="" alt="Foto del Docente" width="100px">
+                                       <img id="foto" src="{{ url($asignacion->personal->foto) }}" width="100">
                                 </center>
 
                             </div>
@@ -52,49 +32,49 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Apellidos</label>
-                                        <p id="apellidos">AAA</p>
+                                        <p id="apellidos">{{ $asignacion->personal->apellidos }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Nombres</label>
-                                        <p id="nombres">AAA</p>
+                                        <p id="nombres">{{ $asignacion->personal->nombres }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Cedula</label>
-                                        <p id="ci">AAA</p>
+                                        <p id="ci">{{ $asignacion->personal->ci }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Fecha de Nacimiento</label>
-                                        <p id="fecha_nacimiento">AAA</p>
+                                        <p id="fecha_nacimiento">{{ $asignacion->personal->fecha_nacimiento }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Telefono</label>
-                                        <p id="telefono">AAA</p>
+                                        <p id="telefono">{{ $asignacion->personal->telefono }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Direccion</label>
-                                        <p id="direccion">AAA</p>
+                                        <p id="direccion">{{ $asignacion->personal->direccion }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Email</label>
-                                        <p id="email">AAA</p>
+                                        <p id="email">{{$asignacion->personal->usuario->email}}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Profesion</label>
-                                        <p id="profesion">AAA</p>
+                                        <p id="profesion">{{$asignacion->personal->profesion}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -110,11 +90,35 @@
              <div class="col-md-12">
                 <div class="card card-outline card-purple">
                 <div class="card-header">
-                    <h3 class="card-title">Formacion Academica</h3>
+                    <h3 class="card-title">Formacion Academica del Docente
+                    </h3>
                 </div>
                 <div class="card-body">
-                    <div id="tabla_formacion">
-                    </div>
+                   <table class="table table-bordered">
+                     <thead>
+                       <tr class="text-center">
+                         <th>Titulo</th>
+                         <th>Institucion</th>
+                         <th>Nivel</th>
+                         <th>Fecha Graduacion</th>
+                         <th>Archivo</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       @foreach($asignacion->personal->formaciones as $formacion)
+                         <tr class="text-center">
+                           <td>{{ $formacion->titulo }}</td>
+                           <td>{{ $formacion->institucion }}</td>
+                           <td>{{ $formacion->nivel }}</td>
+                           <td>{{ $formacion->fecha_graduacion }}</td>
+                           <td>
+                            <a href="{{ url($formacion->archivo) }}" target="_blank"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+
+                           </td>
+                         </tr>
+                       @endforeach
+                     </tbody>
+                   </table>
 
                 </div>
             </div>
@@ -126,12 +130,10 @@
         <div class="col-md-4">
             <div class="card card-purple">
                 <div class="card-header">
-                    <h3 class="card-title">LLene los Datos del Formulario</h3>
+                    <h3 class="card-title">Datos de la Materia/Seccion a Impartir</h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ url('admin/asignaciones/create') }}" method="POST">
-                        @csrf
-                        <input type="text" name="personal_id" id="personal_id" value="" hidden required>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -140,12 +142,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-clock"></i></span>
                                         </div>
-                                        <select name="turno_id" id="turno_id" class="form-control" required>
-                                            <option value="">Seleccione un Turno</option>
-                                            @foreach($turnos as $turno)
-                                                <option value="{{ $turno->id }}">{{ $turno->nombre }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" class="form-control" value="{{ $asignacion->turno->nombre }}" disabled>
                                     </div>
                                     @error('turno_id')
                                         <small style="color:red">{{ $message }}</small>
@@ -159,12 +156,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-university"></i></span>
                                         </div>
-                                        <select name="gestion_id" id="gestion_id" class="form-control" required>
-                                            <option value="">Seleccione una Gestion</option>
-                                            @foreach($gestiones as $gestion)
-                                                <option value="{{ $gestion->id }}">{{ $gestion->nombre }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" class="form-control" value="{{ $asignacion->gestion->nombre }}" disabled>
                                     </div>
                                     @error('gestion_id')
                                         <small style="color:red">{{ $message }}</small>
@@ -178,12 +170,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
                                         </div>
-                                        <select name="nivel_id" id="niveles_id" class="form-control" required>
-                                            <option value="">Seleccione un Nivel</option>
-                                            @foreach($niveles as $nivel)
-                                                <option value="{{ $nivel->id }}">{{ $nivel->nombre }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" class="form-control" value="{{ $asignacion->nivel->nombre }}" disabled>
                                     </div>
                                     @error('nivel_id')
                                         <small style="color:red">{{ $message }}</small>
@@ -197,9 +184,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-list-alt"></i></span>
                                         </div>
-                                        <select name="grados_id" id="grados_id" class="form-control" required>
-                                            <option value="">Primero Seleccione un Nivel</option>
-                                        </select>
+                                        <input type="text" class="form-control" value="{{ $asignacion->grado->nombre }}" disabled>
                                     </div>
                                     @error('grados_id')
                                         <small style="color:red">{{ $message }}</small>
@@ -213,9 +198,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-clone"></i></span>
                                         </div>
-                                        <select name="paralelos_id" id="paralelos_id" class="form-control" required>
-                                            <option value="">Primero Seleccione un Grado</option>
-                                        </select>
+                                        <input type="text" class="form-control" value="{{ $asignacion->paralelo->nombre }}" disabled>
                                     </div>
                                     @error('paralelos_id')
                                         <small style="color:red">{{ $message }}</small>
@@ -229,27 +212,21 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="date" name="fecha_asignacion" id="fecha_asignacion" class="form-control" required>
+                                        <input type="text" class="form-control" value="{{ $asignacion->fecha_asignacion }}" disabled>
                                     </div>
-                                    @error('fecha_asignacion')
+                                    @error('fecha_matriculacion')
                                         <small style="color:red">{{ $message }}</small>
                                     @enderror
                                 </div>
                             </div>
-                             </div>
-                               <div class="col-md-12">
+                             <div class="col-md-12">
                                 <div class="form-group ">
-                                    <label for="">Asignar Materia</label><b>*</b>
+                                    <label for="">Materia</label><b>*</b>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-book"></i></span>
                                         </div>
-                                        <select name="materia_id" id="materia_id" class="form-control select2" required>
-                                            <option value="">Seleccione una Materia</option>
-                                            @foreach($materias as $materia)
-                                                <option value="{{ $materia->id }}">{{ $materia->nombre }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" class="form-control" value="{{ $asignacion->materia->nombre }}" disabled>
                                     </div>
                                     @error('materia_id')
                                         <small style="color:red">{{ $message }}</small>
@@ -258,20 +235,16 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
+                       <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                     <a href="{{ url('/admin/asignaciones') }}" class="btn btn-secondary">
+                                    <a href="{{ url('/admin/asignaciones/') }}" class="btn btn-secondary">
                                         <i class="fas fa-arrow-left"></i> Cancelar
                                     </a>
-                                    <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-save ml-2"></i> Guardar
-                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                    </form>
                 </div>
             </div>
         </div>
@@ -338,52 +311,51 @@
 
         });
 
-        $('#buscar_docente').on('change', function() {
+        $('#buscar_estudiante').on('change', function() {
             var id = $(this).val();
             if(id){
                 $.ajax({
-                    url: '{{ url('/admin/asignaciones/buscar_docente/') }}' + '/' + id,
+                    url: '{{ url('/admin/matriculaciones/buscar_estudiante/') }}' + '/' + id,
                     type: 'GET',
-                    success: function(docente) {
-                        $('#foto').attr('src',docente.foto_url).show();
-                        $('#apellidos').html(docente.apellidos);
-                        $('#nombres').html(docente.nombres);
-                        $('#ci').html(docente.ci);
-                        $('#fecha_nacimiento').html(docente.fecha_nacimiento);
-                        $('#telefono').html(docente.telefono);
-                        $('#direccion').html(docente.direccion);
-                        $('#email').html(docente.usuario.email);
-                        $('#profesion').html(docente.profesion);
-                        $('#docente_id').val(docente.id);
-                        $('#personal_id').val(docente.id);
-                        $('#datos_docente').css('display', 'block');
+                    success: function(estudiante) {
+                        $('#foto').attr('src',estudiante.foto_url).show();
+                        $('#apellidos').html(estudiante.apellidos);
+                        $('#nombres').html(estudiante.nombres);
+                        $('#ci').html(estudiante.ci);
+                        $('#fecha_nacimiento').html(estudiante.fecha_nacimiento);
+                        $('#telefono').html(estudiante.telefono);
+                        $('#direccion').html(estudiante.direccion);
+                        $('#email').html(estudiante.usuario.email);
+                        $('#genero').html(estudiante.genero);
+                        $('#estudiante_id').val(estudiante.id);
+                        $('#datos_estudiante').css('display', 'block');
 
-                        var baseurl = "{{ url('/') }}";
-                        if(docente.formaciones && docente.formaciones.length > 0){
+
+
+                        if(estudiante.matriculaciones && estudiante.matriculaciones.length > 0){
                             var tabla = '<table class="table table-bordered">';
-                            tabla += '<thead><tr class="text-center"><th>Titulo</th><th>Institucion</th><th>Nivel</th><th>fecha Graduacion</th><th>Archivo</th></tr></thead>';
+                            tabla += '<thead><tr class="text-center"><th>Turno</th><th>Gestion</th><th>Nivel</th><th>Grado</th><th>Paralelo</th></tr></thead>';
                             tabla += '<tbody>';
 
-                            docente.formaciones.forEach(function(formacion) {
+                            estudiante.matriculaciones.forEach(function(matriculacion) {
                                 tabla += '<tr class="text-center">' +
-                                    '<td>' + (formacion.titulo || '') + '</td>' +
-                                    '<td>' + (formacion.institucion || '') + '</td>' +
-                                    '<td>' + (formacion.nivel || '') + '</td>' +
-                                    '<td>' + (formacion.fecha_graduacion || '') + '</td>' +
-                                    '<td>' + '<a href="' + baseurl + '/' + formacion.archivo + '" target="_blank"><i class="fas fa-file-pdf"></i> Ver Archivo</a>' + '</td>' +
+                                    '<td>' + (matriculacion.turno.nombre || '') + '</td>' +
+                                    '<td>' + (matriculacion.gestion.nombre || '') + '</td>' +
+                                    '<td>' + (matriculacion.nivel.nombre || '') + '</td>' +
+                                    '<td>' + (matriculacion.grado.nombre || '') + '</td>' +
+                                    '<td>' + (matriculacion.paralelo.nombre || '') + '</td>' +
                                     '</tr>';
                             });
                             tabla += '</tbody></table>';
 
-                            $('#tabla_formacion').html(tabla).show();
+                            $('#tabla_historial').html(tabla).show();
                         }else{
-                            $('#tabla_formacion').html('<p>No se encontró Formacion académica del Docente</p>').show();
+                            $('#tabla_historial').html('<p>No se encontró historial académico</p>').show();
                         }
-
 
                     },
                     error: function() {
-                        alert('Error al buscar el docente');
+                        alert('Error al buscar el estudiante');
                     }
                 });
             }else{

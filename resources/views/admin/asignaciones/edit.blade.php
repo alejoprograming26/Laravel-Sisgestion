@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h1 style="font-weight: bold; font-size: 1.5rem">Asignaciones/Registro de Una Nueva Asignación</h1>
+    <h1 style="font-weight: bold; font-size: 1.5rem">Edicion de una Asignación</h1>
     <hr>
 @stop
 
@@ -10,7 +10,7 @@
         <div class="col-md-8">
            <div class="row">
             <div class="col-md-12">
-                 <div class="card card-purple">
+                 <div class="card card-success">
                 <div class="card-header">
                     <h3 class="card-title">Datos del Docente</h3>
                 </div>
@@ -26,7 +26,7 @@
                                     <select class="form-control select2" name="docente" id="buscar_docente" required>
                                         <option value="">Seleccione un Docente</option>
                                         @foreach ($docentes as $docente)
-                                            <option value="{{ $docente->id }}">{{ $docente->apellidos }} {{ $docente->nombres }} - {{ $docente->ci }}</option>
+                                            <option value="{{ $docente->id }}"{{ $docente->id == $asignacion->personal_id ? 'selected' : '' }}>{{ $docente->apellidos }} {{ $docente->nombres }} - {{ $docente->ci }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -36,65 +36,65 @@
                             </div>
                         </div>
                     </div>
-                   <div id="datos_docente" style="display: none;">
+                   <div id="datos_docente" >
                      <div class="row" >
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">Fotografia</label>
                                 <center>
-                                       <img id="foto" src="" alt="Foto del Docente" width="100px">
+                                       <img id="foto" src="{{ url($asignacion->personal->foto) }}" alt="Foto del Docente" width="100px">
                                 </center>
 
                             </div>
                         </div>
                         <div class="col-md-9">
-                            <div class="row">
+                           <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Apellidos</label>
-                                        <p id="apellidos">AAA</p>
+                                        <p id="apellidos">{{ $asignacion->personal->apellidos }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Nombres</label>
-                                        <p id="nombres">AAA</p>
+                                        <p id="nombres">{{ $asignacion->personal->nombres }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Cedula</label>
-                                        <p id="ci">AAA</p>
+                                        <p id="ci">{{ $asignacion->personal->ci }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Fecha de Nacimiento</label>
-                                        <p id="fecha_nacimiento">AAA</p>
+                                        <p id="fecha_nacimiento">{{ $asignacion->personal->fecha_nacimiento }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Telefono</label>
-                                        <p id="telefono">AAA</p>
+                                        <p id="telefono">{{ $asignacion->personal->telefono }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Direccion</label>
-                                        <p id="direccion">AAA</p>
+                                        <p id="direccion">{{ $asignacion->personal->direccion }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Email</label>
-                                        <p id="email">AAA</p>
+                                        <p id="email">{{$asignacion->personal->usuario->email}}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Profesion</label>
-                                        <p id="profesion">AAA</p>
+                                        <p id="profesion">{{$asignacion->personal->profesion}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -108,12 +108,40 @@
 
            <div class="row">
              <div class="col-md-12">
-                <div class="card card-outline card-purple">
+                <div class="card card-outline card-success">
                 <div class="card-header">
                     <h3 class="card-title">Formacion Academica</h3>
                 </div>
                 <div class="card-body">
                     <div id="tabla_formacion">
+                    <div id="tabla_bd">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Titulo</th>
+                                    <th>Institucion</th>
+                                    <th>Nivel</th>
+                                    <th>Año de Graduacion</th>
+                                    <th>Archivo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($asignacion->personal->formaciones as $formacion)
+                                    <tr>
+                                        <td>{{ $formacion->institucion }}</td>
+                                        <td>{{ $formacion->titulo }}</td>
+                                        <td>{{ $formacion->nivel }}</td>
+                                        <td>{{ $formacion->fecha_graduacion }}</td>
+                                        <td>
+                                            <a href="{{ url($formacion->archivo) }}" target="_blank"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+
                     </div>
 
                 </div>
@@ -124,14 +152,15 @@
 
 
         <div class="col-md-4">
-            <div class="card card-purple">
+            <div class="card card-success">
                 <div class="card-header">
                     <h3 class="card-title">LLene los Datos del Formulario</h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ url('admin/asignaciones/create') }}" method="POST">
+                    <form action="{{ url('admin/asignaciones/'.$asignacion->id) }}" method="POST">
                         @csrf
-                        <input type="text" name="personal_id" id="personal_id" value="" hidden required>
+                        @method('PUT')
+                        <input type="text" name="personal_id" value="{{ $asignacion->personal_id }}" id="personal_id" hidden required>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -143,7 +172,7 @@
                                         <select name="turno_id" id="turno_id" class="form-control" required>
                                             <option value="">Seleccione un Turno</option>
                                             @foreach($turnos as $turno)
-                                                <option value="{{ $turno->id }}">{{ $turno->nombre }}</option>
+                                                <option value="{{ $turno->id }}" {{ $turno->id == $asignacion->turno_id ? 'selected' : '' }}>{{ $turno->nombre }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -162,7 +191,7 @@
                                         <select name="gestion_id" id="gestion_id" class="form-control" required>
                                             <option value="">Seleccione una Gestion</option>
                                             @foreach($gestiones as $gestion)
-                                                <option value="{{ $gestion->id }}">{{ $gestion->nombre }}</option>
+                                                <option value="{{ $gestion->id }}" {{ $gestion->id == $asignacion->gestion_id ? 'selected' : '' }}>{{ $gestion->nombre }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -181,7 +210,7 @@
                                         <select name="nivel_id" id="niveles_id" class="form-control" required>
                                             <option value="">Seleccione un Nivel</option>
                                             @foreach($niveles as $nivel)
-                                                <option value="{{ $nivel->id }}">{{ $nivel->nombre }}</option>
+                                                <option value="{{ $nivel->id }}" {{ $nivel->id == $asignacion->nivel_id ? 'selected' : '' }}>{{ $nivel->nombre }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -199,6 +228,9 @@
                                         </div>
                                         <select name="grados_id" id="grados_id" class="form-control" required>
                                             <option value="">Primero Seleccione un Nivel</option>
+                                            @foreach($grados as $grado)
+                                                <option value="{{ $grado->id }}" {{ $grado->id == $asignacion->grado_id ? 'selected' : '' }}>{{ $grado->nombre }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     @error('grados_id')
@@ -215,6 +247,9 @@
                                         </div>
                                         <select name="paralelos_id" id="paralelos_id" class="form-control" required>
                                             <option value="">Primero Seleccione un Grado</option>
+                                            @foreach($paralelos as $paralelo)
+                                                <option value="{{ $paralelo->id }}" {{ $paralelo->id == $asignacion->paralelo_id ? 'selected' : '' }}>{{ $paralelo->nombre }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     @error('paralelos_id')
@@ -229,7 +264,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="date" name="fecha_asignacion" id="fecha_asignacion" class="form-control" required>
+                                        <input type="date" name="fecha_asignacion" value="{{ $asignacion->fecha_asignacion }}" id="fecha_asignacion" class="form-control" required>
                                     </div>
                                     @error('fecha_asignacion')
                                         <small style="color:red">{{ $message }}</small>
@@ -247,7 +282,7 @@
                                         <select name="materia_id" id="materia_id" class="form-control select2" required>
                                             <option value="">Seleccione una Materia</option>
                                             @foreach($materias as $materia)
-                                                <option value="{{ $materia->id }}">{{ $materia->nombre }}</option>
+                                                <option value="{{ $materia->id }}" {{ $materia->id == $asignacion->materia_id ? 'selected' : '' }}>{{ $materia->nombre }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -265,7 +300,7 @@
                                         <i class="fas fa-arrow-left"></i> Cancelar
                                     </a>
                                     <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-save ml-2"></i> Guardar
+                                        <i class="fas fa-save ml-2"></i> Actualizar
                                     </button>
                                 </div>
                             </div>
@@ -376,7 +411,9 @@
                             tabla += '</tbody></table>';
 
                             $('#tabla_formacion').html(tabla).show();
+                            $('#tabla_bd').css('display', 'none');
                         }else{
+                            $('#tabla_bd').css('display', 'none');
                             $('#tabla_formacion').html('<p>No se encontró Formacion académica del Docente</p>').show();
                         }
 

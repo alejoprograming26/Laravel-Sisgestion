@@ -300,13 +300,13 @@ return [
 
     'menu' => [
 
-        [
+        [  'can' => 'admin.configuracion.index',
             'text'=> 'Configuracion',
             'url' => 'admin/configuracion',
             'icon' => 'fas fa-fw fa-cog',
             'classes' => 'bg-purple text-white',
         ],
-         [
+         [  'can' => 'admin.gestiones.index',
             'text'=> 'Gestiones',
             'url' => 'admin/gestiones',
             'icon' => 'fas fa-fw fa-tasks',
@@ -314,6 +314,7 @@ return [
 
         ],
         [
+            'can' => 'admin.periodos.index',
             'text'=> 'Periodos',
             'url' => 'admin/periodos',
             'icon' => 'fas fa-fw fa-calendar-alt',
@@ -321,6 +322,7 @@ return [
 
         ],
         [
+            'can' => 'admin.niveles.index',
             'text'=> 'Niveles',
             'url' => 'admin/niveles',
             'icon' => 'fas fa-fw fa-layer-group',
@@ -328,6 +330,7 @@ return [
 
         ],
          [
+            'can' => 'admin.grados.index',
             'text'=> 'Grados',
             'url' => 'admin/grados',
             'icon' => 'fas fa-fw fa-user-graduate',
@@ -336,6 +339,7 @@ return [
          ],
 
          [
+            'can' => 'admin.paralelos.index',
             'text'=> 'Paralelos',
             'url' => 'admin/paralelos',
             'icon' => 'fas fa-fw fa-clone',
@@ -344,6 +348,7 @@ return [
          ],
 
          [
+            'can' => 'admin.turnos.index',
             'text'=> 'Turnos',
             'url' => 'admin/turnos',
             'icon' => 'fas fa-fw fa-clock',
@@ -352,6 +357,7 @@ return [
          ],
 
          [
+            'can' => 'admin.materias.index',
             'text'=> 'Materias',
             'url' => 'admin/materias',
             'icon' => 'fas fa-fw fa-book',
@@ -359,12 +365,14 @@ return [
          ],
 
          [
+            'can' => 'admin.roles.index',
             'text'=> 'Roles',
             'url' => 'admin/roles',
             'icon' => 'fas fa-fw fa-user-check',
             'classes' => 'bg-purple text-white',
          ],
            [
+            'can' => 'admin.personal.index',
             'text'=> 'Personal',
             'icon' => 'fas fa-fw fa-user-cog',
             'classes' => 'bg-purple text-white',
@@ -385,7 +393,7 @@ return [
             ],
          ],
          [
-
+            'can' => 'admin.asignaciones.index',
             'text'=> 'Asignaciones',
             'url' => 'admin/asignaciones',
             'icon' => 'fas fa-fw fa-chalkboard-teacher',
@@ -393,6 +401,7 @@ return [
          ],
 
         [
+          'can' => 'admin.ppffs.index',
           'text'=> 'Padres',
           'url' => 'admin/ppffs',
           'classes' => 'bg-purple text-white',
@@ -400,6 +409,7 @@ return [
 
         ],
           [
+          'can'=> 'admin.estudiantes.index',
           'text'=> 'Estudiante',
           'url' => 'admin/estudiantes',
           'classes' => 'bg-purple text-white',
@@ -407,12 +417,22 @@ return [
 
         ],
         [
+          'can'=> 'admin.matriculaciones.index',
           'text'=> 'Matriculaciones',
           'url' => 'admin/matriculaciones',
           'classes' => 'bg-purple text-white',
           'icon' => 'fas fa-fw fa-clipboard-list',
 
+        ],
+        [
+          'can'=> 'admin.pagos.index',
+          'text'=> 'Pagos',
+          'url' => 'admin/pagos',
+          'classes' => 'bg-purple text-white',
+          'icon' => 'fas fa-fw fa-money-bill-wave',
+
         ]
+
 
 
 

@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h1><b>Bienvenido: </b>{{Auth::user()->name}}</h1>
+    <h1><b>Bienvenido  ({{Auth::user()->roles->pluck('name')->implode(', ')}}):  </b>{{Auth::user()->name}}</h1>
     <hr>
 
 @stop
@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
-            <img src="{{ url('/img/grafico.gif') }}" width="90px" alt="">
+            <img src="{{ url('/img/gestiones.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Gestiones registrados</b></span>
                 <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_gestiones }} Gestiones</span>
@@ -21,7 +21,7 @@
     </div>
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
-            <img src="{{ url('/img/calendario.gif') }}" width="90px" alt="">
+            <img src="{{ url('/img/periodo.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Periodos Registrados</b></span>
                 <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_periodos }} Periodos</span>
@@ -32,7 +32,7 @@
     </div>
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
-            <img src="{{ url('/img/birrete.gif') }}" width="90px" alt="">
+            <img src="{{ url('/img/nivell.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Niveles Registrados</b></span>
                 <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_niveles }} Niveles</span>
@@ -43,7 +43,7 @@
     </div>
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
-            <img src="{{ url('/img/documento.gif') }}" width="90px" alt="">
+            <img src="{{ url('/img/grado.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Grados Registrados</b></span>
                 <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_grados}} Grados</span>
@@ -54,7 +54,7 @@
     </div>
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
-            <img src="{{ url('/img/diagrama.gif') }}" width="90px" alt="">
+            <img src="{{ url('/img/paralelo.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Paralelos Registrados</b></span>
                 <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_paralelos }} Paralelos</span>
@@ -65,7 +65,7 @@
     </div>
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
-            <img src="{{ url('/img/hogar.gif') }}" width="90px" alt="">
+            <img src="{{ url('/img/turno.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Turnos Registrados</b></span>
                 <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_turnos }} Turnos</span>
@@ -76,7 +76,7 @@
     </div>
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP"style="background-color: " >
-            <img src="{{ url('/img/materia.gif') }}" width="90px" alt="">
+            <img src="{{ url('/img/materias.gif') }}" width="90px" alt="">
             <div class="info-box-content" >
                 <span class="info-box-text"><b>Materias Registradas</b></span>
                 <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_materias }} Materias</span>
@@ -87,7 +87,7 @@
     </div>
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP" >
-            <img src="{{ url('/img/role.gif') }}" width="90px" alt="">
+            <img src="{{ url('/img/roles.gif') }}" width="90px" alt="">
             <div class="info-box-content" >
                 <span class="info-box-text"><b>Roless Registrados</b></span>
                 <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_roles }} Roles</span>
@@ -98,7 +98,7 @@
     </div>
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
-            <img src="{{ url('/img/admin.gif') }}" width="90px" alt="">
+            <img src="{{ url('/img/adminis.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Personal Administrativo Registrado</b></span>
                 <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_personal_admin }} Administrativos</span>
@@ -108,8 +108,8 @@
         <!-- /.info-box -->
     </div>
     <div class="col-md-3 col-sm-6 col-12">
-        <div class="info-box zoomP">
-            <img src="{{ url('/img/docente.gif') }}" width="90px" alt="">
+        <div class="info-box zoomP" style="background-color: #ffffff;">
+            <img src="{{ url('/img/maestro.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Personal Docente Registrado</b></span>
                 <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_personal_docente}} Docentes</span>
