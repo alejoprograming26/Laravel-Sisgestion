@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Asistencia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AsistenciaController extends Controller
 {
@@ -12,7 +14,19 @@ class AsistenciaController extends Controller
      */
     public function index()
     {
-        $rol = auth()->user()->role;
+         $rol = Auth::user()->roles->pluck('name')->implode(', ');
+        echo $id_usuario = Auth::user()->id;
+        if (($rol === 'ADMINISTRADOR/A')||($rol === 'DIRECTOR/A') ||($rol === 'SECRETARIO/A') ||($rol === 'ENCARGADO/A ACADEMICO')) {
+            return view('admin.asistencias.index');
+
+         }
+         if($rol === 'DOCENTE') {
+
+            //return view('admin.asistencias.index_docente', compact('docente'));
+        }
+        if ($rol === 'ESTUDIANTE') {
+            return view('admin.asistencias.index_estudiante');
+        }
     }
 
     /**
