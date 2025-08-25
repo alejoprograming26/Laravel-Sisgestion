@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('detalle_asistencias', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('asistencias_id')->constrained('asistencias')->onDelete('cascade');
+            $table->foreignId('estudiante_id')->constrained('estudiantes')->onDelete('cascade');
+            $table->enum('estado',['Presente', 'Ausente', 'Tarde', 'Licencia']);
             $table->timestamps();
         });
     }

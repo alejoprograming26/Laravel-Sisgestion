@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('asistencias', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('asignacion_id')->constrained('asignacions')->onDelete('cascade');
+            $table->date('fecha');
+            $table->string('observacion')->nullable();
             $table->timestamps();
         });
     }

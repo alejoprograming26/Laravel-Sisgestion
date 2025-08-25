@@ -412,6 +412,13 @@ return [
           'classes' => 'bg-purple text-white',
           'icon' => 'fas fa-fw fa-clipboard-list',
 
+        ],
+        [
+          'text'=> 'Asistencias',
+          'url' => 'admin/asistencias',
+          'classes' => 'bg-purple text-white',
+          'icon' => 'fas fa-fw fa-clipboard-list',
+
         ]
 
 
