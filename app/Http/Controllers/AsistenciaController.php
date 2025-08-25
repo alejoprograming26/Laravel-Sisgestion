@@ -12,7 +12,7 @@ class AsistenciaController extends Controller
      */
     public function index()
     {
-        //
+        $rol = auth()->user()->role;
     }
 
     /**
