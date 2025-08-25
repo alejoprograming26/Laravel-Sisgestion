@@ -431,6 +431,14 @@ return [
           'classes' => 'bg-purple text-white',
           'icon' => 'fas fa-fw fa-money-bill-wave',
 
+        ],
+        [
+          'can'=> 'admin.asistencias.index',
+          'text'=> 'Asistencias',
+          'url' => 'admin/asistencias',
+          'classes' => 'bg-purple text-white',
+          'icon' => 'fas fa-fw fa-user-check',
+
         ]
 
 

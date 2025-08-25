@@ -137,3 +137,7 @@ Route::get('/admin/pagos/estudiante/{id}', [App\Http\Controllers\PagoController:
 Route::post('/admin/pagos/create', [App\Http\Controllers\PagoController::class,'store'])->name('admin.pagos.store')->middleware('auth', 'can:admin.pagos.store');
 Route::get('/admin/pagos/{id}/comprobante', [App\Http\Controllers\PagoController::class,'comprobante'])->name('admin.pagos.comprobante')->middleware('auth', 'can:admin.pagos.comprobante');
 Route::delete('/admin/pagos/{id}', [App\Http\Controllers\PagoController::class,'destroy'])->name('admin.pagos.destroy')->middleware('auth', 'can:admin.pagos.destroy');
+
+//Rutas Asistencias
+Route::get('/admin/asistencias', [App\Http\Controllers\AsistenciaController::class,'index'])->name('admin.asistencias.index')->middleware('auth', 'can:admin.asistencias.index');
+Route::get('/admin/asistencias/create/asignacion/{id}', [App\Http\Controllers\AsistenciaController::class,'create'])->name('admin.asistencias.create')->middleware('auth', 'can:admin.asistencias.create');
