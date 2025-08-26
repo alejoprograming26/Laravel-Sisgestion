@@ -2,7 +2,7 @@
 
 
 @section('content_header')
-    <h1 style="font-weight: bold; font-size: 1.5rem">Listado de Asignaciones Para Asistencia De los Estudiantes</h1>
+    <h1 style="font-weight: bold; font-size: 1.5rem">Listado de Asistencias De los Estudiantes</h1>
     <hr>
 @stop
 
@@ -12,7 +12,10 @@
             <div class="col-md-12">
                 <div class="card card-outline card-purple">
                     <div class="card-header">
-                        <h3 class="card-title">Asignaciones Registradas</h3>
+                        <h2 class="card-title">Asistencias Registradas = <b>Gestion "{{ $asignacion->gestion->nombre }}"/  Nivel "{{ $asignacion->nivel->nombre }}"
+                            /  Grado "{{ $asignacion->grado->nombre }}" /  Paralelo "{{ $asignacion->paralelo->nombre }}" /  Materia "{{ $asignacion->materia->nombre }}"
+                            </b>
+                        </h2>
 
                     </div>
                     <!-- /.card-header -->
@@ -21,30 +24,22 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>Nr</th>
-                                    <th>Turno</th>
-                                    <th>Gestion</th>
-                                    <th>Nivel</th>
-                                    <th>Grado</th>
-                                    <th>Paralelo</th>
-                                    <th>Materia</th>
+                                    <th>Fecha Asistencia</th>
+                                    <th>Observacion</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($asignaciones as $asignacion)
+                                @foreach ($asistencias as $asistencia)
                                     <tr class="text-center">
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $asignacion->turno->nombre }}</td>
-                                        <td>{{ $asignacion->gestion->nombre }}</td>
-                                        <td>{{ $asignacion->nivel->nombre }}</td>
-                                        <td>{{ $asignacion->grado->nombre }}</td>
-                                        <td>{{ $asignacion->paralelo->nombre }}</td>
-                                        <td>{{ $asignacion->materia->nombre }}</td>
+                                        <td>{{ $asistencia->fecha }}</td>
+                                        <td>{{ $asistencia->observacion }}</td>
                                         <td>
                                             <div class="row d-flex justify-content-center">
-                                                 <a href="{{ url('/admin/asistencias/create/asignacion/' .$asignacion->id ) }}"
+                                                 <a href="{{ url('/admin/asistencias/create/asignacion/' ) }}"
                                                     class="btn btn-success btn-sm">
-                                                    <i class="fas fa-list-alt"></i> Ver Asistencia
+                                                    <i class="fas fa-list-alt"></i> Realizar Asistencia
                                                 </a>
 
                                             </div>
@@ -100,10 +95,10 @@
         "pageLength": 10,
         "language": {
             "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ Asignaciones",
-            "infoEmpty": "Mostrando 0 a 0 de 0 Asignaciones",
-            "infoFiltered": "(Filtrado de _MAX_ total Asignaciones)",
-            "lengthMenu": "Mostrar _MENU_ Asignaciones",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Asistencias",
+            "infoEmpty": "Mostrando 0 a 0 de 0 Asistencias",
+            "infoFiltered": "(Filtrado de _MAX_ total Asistencias)",
+            "lengthMenu": "Mostrar _MENU_ Asistencias",
             "loadingRecords": "Cargando...",
             "processing": "Procesando...",
             "search": "Buscador",
