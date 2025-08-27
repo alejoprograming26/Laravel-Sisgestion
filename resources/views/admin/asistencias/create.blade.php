@@ -1,6 +1,5 @@
 @extends('adminlte::page')
 
-
 @section('content_header')
     <h1 style="font-weight: bold; font-size: 1.5rem">Listado de Asistencias De los Estudiantes</h1>
     <hr>
@@ -12,10 +11,97 @@
             <div class="col-md-12">
                 <div class="card card-outline card-purple">
                     <div class="card-header">
-                        <h2 class="card-title">Asistencias Registradas = <b>Gestion "{{ $asignacion->gestion->nombre }}"/  Nivel "{{ $asignacion->nivel->nombre }}"
-                            /  Grado "{{ $asignacion->grado->nombre }}" /  Paralelo "{{ $asignacion->paralelo->nombre }}" /  Materia "{{ $asignacion->materia->nombre }}"
+                        <h2 class="card-title">
+                            Asistencias Registradas =
+                            <b>
+                                Gestion "{{ $asignacion->gestion->nombre }}"/
+                                Nivel "{{ $asignacion->nivel->nombre }}"
+                                /  Grado "{{ $asignacion->grado->nombre }}"
+                                /  Paralelo "{{ $asignacion->paralelo->nombre }}"
+                                /  Materia "{{ $asignacion->materia->nombre }}"
                             </b>
                         </h2>
+                        <div class="card-tools">
+                            <!-- Button trigger modal -->
+                            <!-- Botón para abrir el modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">
+                              <i class="fas fa-plus"></i> Registrar Asistencia
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color: #21ffc0; color: #000000;">
+                                            <h4 class="modal-title" id="modalCreateLabel">Registrar Nueva Asistencia</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ url('/admin/asistencias/create') }}" method="POST">
+                                                @csrf
+                                                <input type="text" name="asignacion_id" value="{{ $asignacion->id }}" hidden>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="fecha">Fecha de la Asistencia</label>
+                                                            <input type="date" class="form-control" name="fecha" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="form-group">
+                                                            <label for="observacion">Observación (Opcional)</label>
+                                                            <input type="text" class="form-control" name="observacion" rows="3"></input>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label for="estudiantes">Estudiantes</label>
+                                                            <table class="table table-bordered table-striped table-hover table-sm">
+                                                                <thead>
+                                                                    <tr class="text-center">
+                                                                        <th>Nr</th>
+                                                                        <th>Estudiantes</th>
+                                                                        <th>Cédula</th>
+                                                                        <th>Asistencia</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($matriculados as $matriculado)
+                                                                        <tr class="text-center">
+                                                                            <td>{{ $loop->iteration }}</td>
+                                                                            <td>{{ $matriculado->estudiante->nombres }} {{ $matriculado->estudiante->apellidos }}</td>
+                                                                            <td>{{ $matriculado->estudiante->ci }}</td>
+                                                                            <td>
+                                                                                <input type="radio" name="estado_asistencia[{{ $matriculado->estudiante->id }}]" value="Presente" required>Presente
+                                                                                <input type="radio" name="estado_asistencia[{{ $matriculado->estudiante->id }}]" value="Ausente" required>Ausente
+                                                                                <input type="radio" name="estado_asistencia[{{ $matriculado->estudiante->id }}]" value="Tarde" required>Tarde
+                                                                                <input type="radio" name="estado_asistencia[{{ $matriculado->estudiante->id }}]" value="Licencia" required>Licencia
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                             <button type="submit" class="btn btn-success">Guardar </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     <!-- /.card-header -->

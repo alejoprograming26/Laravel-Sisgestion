@@ -141,3 +141,4 @@ Route::delete('/admin/pagos/{id}', [App\Http\Controllers\PagoController::class,'
 //Rutas Asistencias
 Route::get('/admin/asistencias', [App\Http\Controllers\AsistenciaController::class,'index'])->name('admin.asistencias.index')->middleware('auth', 'can:admin.asistencias.index');
 Route::get('/admin/asistencias/create/asignacion/{id}', [App\Http\Controllers\AsistenciaController::class,'create'])->name('admin.asistencias.create')->middleware('auth', 'can:admin.asistencias.create');
+Route::post('/admin/asistencias/create', [App\Http\Controllers\AsistenciaController::class,'store'])->name('admin.asistencias.store')->middleware('auth', 'can:admin.asistencias.store');

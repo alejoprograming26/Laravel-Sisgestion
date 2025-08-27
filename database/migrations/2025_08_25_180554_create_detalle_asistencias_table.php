@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('asistencia_id')->constrained('asistencias')->onDelete('cascade');
             $table->foreignId('estudiante_id')->constrained('estudiantes')->onDelete('cascade');
-            $table->enum('estado',['Presente', 'Ausente', 'Tarde', 'Licencia']);
+            $table->enum('estado_asistencia',['Presente', 'Ausente', 'Tarde', 'Licencia']);
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ use App\Models\Materia;
 use App\Models\Personal;
 use App\Models\Estudiante;
 use App\Models\Ppff;
+use App\Models\Asignacion;
 
 
 class DatabaseSeeder extends Seeder

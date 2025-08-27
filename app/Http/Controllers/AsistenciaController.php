@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Personal;
 use App\Models\Asignacion;
+use App\Models\Matriculacion;
+use App\Models\DetalleAsistencia;
 
 class AsistenciaController extends Controller
 {
@@ -40,7 +42,14 @@ class AsistenciaController extends Controller
         $asignacion = Asignacion::findOrFail($id);
         $docente = Personal::where('id', $asignacion->personal_id)->first();
         $asistencias = Asistencia::where('asignacion_id', $asignacion->id)->get();
-        return view('admin.asistencias.create', compact('asignacion', 'docente', 'asistencias'));
+        $matriculados = Matriculacion::with('estudiante')->where('turno_id', $asignacion->turno_id)
+       ->where('gestion_id', $asignacion->gestion_id)
+       ->where('nivel_id', $asignacion->nivel_id)
+       ->where('grado_id', $asignacion->grado_id)
+       ->where('paralelo_id', $asignacion->paralelo_id)
+       ->get()
+       ->sortBy('estudiante.apellidos');
+        return view('admin.asistencias.create', compact('asignacion', 'docente', 'asistencias', 'matriculados'));
     }
 
     /**
@@ -48,7 +57,34 @@ class AsistenciaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       //$datos =request ()->all();
+       //return response()->json($datos);
+       $request ->validate([
+           'asignacion_id' => 'required',
+           'fecha' => 'required|date',
+           'observacion' => 'nullable|string|max:255',
+           'estado_asistencia' => 'required',
+       ]);
+       $asistencia = new Asistencia();
+       $asistencia->asignacion_id = $request->asignacion_id;
+       $asistencia->fecha = $request->fecha;
+       $asistencia->observacion = $request->observacion;
+       $asistencia->save();
+
+       $estado_asistencia = $request->estado_asistencia;
+
+       foreach ($estado_asistencia as $estudiante_id => $estado) {
+           DetalleAsistencia::create([
+               'asistencia_id' => $asistencia->id,
+               'estudiante_id' => $estudiante_id,
+               'estado_asistencia' => $estado,
+           ]);
+       }
+
+       return redirect()->back()
+       ->with(['mensaje' => 'Asistencia creada con éxito',
+       'icono' => 'success']);
+
     }
 
     /**
