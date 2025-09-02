@@ -189,7 +189,6 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Layout-and-Styling-Configuration
     |
     */
-
     'classes_body' => '',
     'classes_brand' => '',
     'classes_brand_text' => '',
@@ -198,7 +197,7 @@ return [
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-sidebar-primary elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar- navbar-light',
+    'classes_topnav' => 'navbar-dark bg-dark',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -236,11 +235,11 @@ return [
     |
     */
 
-    'right_sidebar' => false,
+    'right_sidebar' => true,
     'right_sidebar_icon' => 'fas fa-cogs',
     'right_sidebar_theme' => 'dark',
-    'right_sidebar_slide' => true,
-    'right_sidebar_push' => true,
+    'right_sidebar_slide' => false,
+    'right_sidebar_push' => false,
     'right_sidebar_scrollbar_theme' => 'os-theme-light',
     'right_sidebar_scrollbar_auto_hide' => 'l',
 
@@ -381,12 +380,12 @@ return [
                     'text'=> ' Administrativo',
                     'url' => 'admin/personal/administrativo',
                     'icon' => 'fas fa-fw fa-user-cog',
-                    'classes' => 'bg-white text-white',
+                    'classes' => 'bg-green text-white',
                 ],
                 [
                     'text'=> ' Docente',
                     'url' => 'admin/personal/docente',
-                    'classes' => 'bg-white text-white',
+                    'classes' => 'bg-green text-white',
                     'icon' => 'fas fa-fw fa-user-cog',
                 ],
 

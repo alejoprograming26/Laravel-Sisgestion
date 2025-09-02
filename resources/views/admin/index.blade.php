@@ -108,7 +108,7 @@
         <!-- /.info-box -->
     </div>
     <div class="col-md-3 col-sm-6 col-12">
-        <div class="info-box zoomP" style="background-color: #ffffff;">
+        <div class="info-box zoomP" >
             <img src="{{ url('/img/maestro.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Personal Docente Registrado</b></span>

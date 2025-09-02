@@ -182,7 +182,7 @@ class DatabaseSeeder extends Seeder
         Estudiante::create(['usuario_id' => 11, 'ppff_id' => 5, 'nombres' => 'Sanchez', 'apellidos' => 'Parra', 'ci' => '123400', 'fecha_nacimiento' => '2000-01-01', 'telefono' => '12345678', 'direccion' => 'Calle 51 Av. Pedro Leon', 'foto' => '']);
 
         Asignacion::create(['personal_id' => 3,  'gestion_id' => 1, 'nivel_id' => 2, 'grado_id' => 3, 'paralelo_id' => 3, 'materia_id' => 1, 'turno_id' => 1, 'estado' => 'activo', 'fecha_asignacion' => '2025-01-01']);
-        Asignacion::create(['personal_id' => 3,  'gestion_id' => 1, 'nivel_id' => 2, 'grado_id' => 3, 'paralelo_id' => 3, 'materia_id' => 2, 'turno_id' => 1, 'estado' => 'activo', 'fecha_asignacion' => '2025-01-01']);
+        Asignacion::create(['personal_id' => 3,  'gestion_id' => 1, 'nivel_id' => 2, 'grado_id' => 4, 'paralelo_id' => 4, 'materia_id' => 1, 'turno_id' => 1, 'estado' => 'activo', 'fecha_asignacion' => '2025-01-01']);
         Asignacion::create(['personal_id' => 1,  'gestion_id' => 1, 'nivel_id' => 1, 'grado_id' => 1, 'paralelo_id' => 1, 'materia_id' => 4, 'turno_id' => 1, 'estado' => 'activo', 'fecha_asignacion' => '2025-01-01']);
        }
 }

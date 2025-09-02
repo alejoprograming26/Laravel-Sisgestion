@@ -41,7 +41,7 @@ class AsistenciaController extends Controller
     {
         $asignacion = Asignacion::findOrFail($id);
         $docente = Personal::where('id', $asignacion->personal_id)->first();
-        $asistencias = Asistencia::where('asignacion_id', $asignacion->id)->get();
+        $asistencias = Asistencia::with('detallesAsistencia')->where('asignacion_id', $asignacion->id)->get();
         $matriculados = Matriculacion::with('estudiante')->where('turno_id', $asignacion->turno_id)
        ->where('gestion_id', $asignacion->gestion_id)
        ->where('nivel_id', $asignacion->nivel_id)

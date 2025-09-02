@@ -61,6 +61,7 @@ class RoleController extends Controller
             if(stripos($permiso->name, 'matriculaciones') !== false){return 'Matriculaciones del Sistema'; }
             if(stripos($permiso->name, 'asignaciones') !== false){return 'Asignaciones del Sistema'; }
             if(stripos($permiso->name, 'pagos') !== false){return 'Pagos del Sistema'; }
+            if(stripos($permiso->name, 'asistencias') !== false){return 'Asistencias del Sistema'; }
         });
         return view('admin.roles.permisos', compact('rol', 'permisos'));
     }
