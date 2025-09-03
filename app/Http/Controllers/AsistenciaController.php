@@ -106,10 +106,34 @@ class AsistenciaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Asistencia $asistencia)
+    public function update(Request $request, $id)
     {
-        //
+        //$datos = $request->all();
+       //return response()->json($datos);
+        $request ->validate([
+           'asignacion_id' => 'required',
+           'fecha' => 'required|date',
+           'observacion' => 'nullable|string|max:255',
+           'estado_asistencia' => 'required',
+       ]);
+       $asistencia = Asistencia::find($id);
+       $asistencia->asignacion_id = $request->asignacion_id;
+       $asistencia->fecha = $request->fecha;
+       $asistencia->observacion = $request->observacion;
+       $asistencia->save();
+
+       $estado_asistencia = $request->estado_asistencia;
+
+       foreach ($estado_asistencia as $estudiante_id => $estado) {
+           DetalleAsistencia::where('asistencia_id', $asistencia->id)
+               ->where('estudiante_id', $estudiante_id)
+               ->update(['estado_asistencia' => $estado]);
+       }
+       return redirect()->back()
+       ->with(['mensaje' => 'Asistencia actualizada con éxito',
+       'icono' => 'success']);
     }
+
 
     /**
      * Remove the specified resource from storage.
