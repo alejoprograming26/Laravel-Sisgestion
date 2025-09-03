@@ -138,8 +138,13 @@ class AsistenciaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Asistencia $asistencia)
+    public function destroy($id)
     {
-        //
+        $asistencia = Asistencia::findOrFail($id);
+        $asistencia->detallesAsistencia()->delete();
+        $asistencia->delete();
+        return redirect()->back()
+            ->with(['mensaje' => 'Asistencia eliminada con éxito',
+            'icono' => 'warning']);
     }
 }
