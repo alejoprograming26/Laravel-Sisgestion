@@ -581,15 +581,17 @@ return [
 
 
         'Chartjs' => [
-            'active' => false,
+            'active' => true,
             'files' => [
             [
                 'type' => 'js',
-                'asset' => false,
-                'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                'asset' => true,
+                'location' => '//cdnjs.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js',
             ],
             ],
         ],
+
+
         'Pace' => [
             'active' => false,
             'files' => [

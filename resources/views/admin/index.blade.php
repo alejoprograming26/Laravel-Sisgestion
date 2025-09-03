@@ -8,144 +8,165 @@
 
 @section('content')
 <div class="row">
+    @can('admin.gestiones.index')
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
             <img src="{{ url('/img/gestiones.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Gestiones registrados</b></span>
-                <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_gestiones }} Gestiones</span>
+                <span class="info-box-number" style="color:rgb(80, 63, 215);font-size:18pt">
+                    {{ $total_gestiones }} Gestiones
+                </span>
             </div>
-            <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
     </div>
+ @endcan
+
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
             <img src="{{ url('/img/periodo.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Periodos Registrados</b></span>
-                <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_periodos }} Periodos</span>
+                <span class="info-box-number" style="color:rgb(80, 63, 215);font-size:18pt">
+                    {{ $total_periodos }} Periodos
+                </span>
             </div>
-            <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
     </div>
+
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
             <img src="{{ url('/img/nivell.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Niveles Registrados</b></span>
-                <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_niveles }} Niveles</span>
+                <span class="info-box-number" style="color:rgb(80, 63, 215);font-size:18pt">
+                    {{ $total_niveles }} Niveles
+                </span>
             </div>
-            <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
     </div>
+
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
             <img src="{{ url('/img/grado.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Grados Registrados</b></span>
-                <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_grados}} Grados</span>
+                <span class="info-box-number" style="color:rgb(80, 63, 215);font-size:18pt">
+                    {{ $total_grados }} Grados
+                </span>
             </div>
-            <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
     </div>
+
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
             <img src="{{ url('/img/paralelo.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Paralelos Registrados</b></span>
-                <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_paralelos }} Paralelos</span>
+                <span class="info-box-number" style="color:rgb(80, 63, 215);font-size:18pt">
+                    {{ $total_paralelos }} Paralelos
+                </span>
             </div>
-            <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
     </div>
+
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
             <img src="{{ url('/img/turno.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Turnos Registrados</b></span>
-                <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_turnos }} Turnos</span>
+                <span class="info-box-number" style="color:rgb(80, 63, 215);font-size:18pt">
+                    {{ $total_turnos }} Turnos
+                </span>
             </div>
-            <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
     </div>
+
     <div class="col-md-3 col-sm-6 col-12">
-        <div class="info-box zoomP"style="background-color: " >
+        <div class="info-box zoomP">
             <img src="{{ url('/img/materias.gif') }}" width="90px" alt="">
-            <div class="info-box-content" >
+            <div class="info-box-content">
                 <span class="info-box-text"><b>Materias Registradas</b></span>
-                <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_materias }} Materias</span>
+                <span class="info-box-number" style="color:rgb(80, 63, 215);font-size:18pt">
+                    {{ $total_materias }} Materias
+                </span>
             </div>
-            <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
     </div>
+
     <div class="col-md-3 col-sm-6 col-12">
-        <div class="info-box zoomP" >
+        <div class="info-box zoomP">
             <img src="{{ url('/img/roles.gif') }}" width="90px" alt="">
-            <div class="info-box-content" >
-                <span class="info-box-text"><b>Roless Registrados</b></span>
-                <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_roles }} Roles</span>
+            <div class="info-box-content">
+                <span class="info-box-text"><b>Roles Registrados</b></span>
+                <span class="info-box-number" style="color:rgb(80, 63, 215);font-size:18pt">
+                    {{ $total_roles }} Roles
+                </span>
             </div>
-            <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
     </div>
+
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
             <img src="{{ url('/img/adminis.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Personal Administrativo Registrado</b></span>
-                <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_personal_admin }} Administrativos</span>
+                <span class="info-box-number" style="color:rgb(80, 63, 215);font-size:18pt">
+                    {{ $total_personal_admin }} Administrativos
+                </span>
             </div>
-            <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
     </div>
+
     <div class="col-md-3 col-sm-6 col-12">
-        <div class="info-box zoomP" >
+        <div class="info-box zoomP">
             <img src="{{ url('/img/maestro.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Personal Docente Registrado</b></span>
-                <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_personal_docente}} Docentes</span>
+                <span class="info-box-number" style="color:rgb(80, 63, 215);font-size:18pt">
+                    {{ $total_personal_docente }} Docentes
+                </span>
             </div>
-            <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
     </div>
-     <div class="col-md-3 col-sm-6 col-12">
+
+    <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
             <img src="{{ url('/img/estudiante.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Estudiantes Registrados</b></span>
-                <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_estudiantes }} Estudiantes</span>
+                <span class="info-box-number" style="color:rgb(80, 63, 215);font-size:18pt">
+                    {{ $total_estudiantes }} Estudiantes
+                </span>
             </div>
-            <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
     </div>
+
     <div class="col-md-3 col-sm-6 col-12">
         <div class="info-box zoomP">
             <img src="{{ url('/img/padre.gif') }}" width="90px" alt="">
             <div class="info-box-content">
                 <span class="info-box-text"><b>Padres Registrados</b></span>
-                <span class="info-box-number"  style="color:rgb(80, 63, 215);font-size:18pt">{{ $total_ppff }} Padres</span>
+                <span class="info-box-number" style="color:rgb(80, 63, 215);font-size:18pt">
+                    {{ $total_ppff }} Padres
+                </span>
             </div>
-            <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
     </div>
-
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-outline card-purple">
+            <div class="card-header">
+                <h3 class="card-title">Total Estudiantes Matriculados por Gestion</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
-
-</div>
-
 
 @stop
 @section('css')
@@ -154,7 +175,32 @@
 @stop
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
     <script>
+        var gestiones =@json($gestionesArray);
+        var matriculas =@json($datosMatriculados);
+        new Chart(document.getElementById('myChart'), {
+            type: 'line',
+            data: {
+                labels: gestiones,
+                datasets: [{
+                    label: 'Matriculas por gestion',
+                    data: matriculas,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'green',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.6
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
         console.log("Hi, I'm using the Laravel-AdminLTE package!");
     </script>
 @stop

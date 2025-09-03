@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
 
@@ -20,7 +21,16 @@ class AdminController extends Controller
          $total_personal_docente = \App\Models\Personal::where('tipo', 'docente')-> count();
          $total_estudiantes = \App\Models\Estudiante:: count();
          $total_ppff = \App\Models\Ppff:: count();
+
+        $gestiones = \App\Models\Gestion::all();
+
+         $matriculas_gestiones = \App\Models\Matriculacion::select(DB::raw('count(*) as total'), 'gestion_id')->groupBy('gestion_id')->get();
+
+        $gestionesArray= $gestiones->pluck('nombre')->toArray();
+        $datosMatriculados = $matriculas_gestiones->pluck('total')->toArray();
+
+
         return view('admin.index', compact('total_gestiones', 'total_periodos', 'total_niveles', 'total_grados', 'total_paralelos', 'total_turnos',
-         'total_materias', 'total_roles', 'total_personal_admin', 'total_personal_docente', 'total_estudiantes', 'total_ppff', ));
+         'total_materias', 'total_roles', 'total_personal_admin', 'total_personal_docente', 'total_estudiantes', 'total_ppff', 'gestionesArray', 'datosMatriculados'));
     }
 }
