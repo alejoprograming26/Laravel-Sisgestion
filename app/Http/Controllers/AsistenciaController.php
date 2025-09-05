@@ -10,6 +10,20 @@ use App\Models\Personal;
 use App\Models\Asignacion;
 use App\Models\Matriculacion;
 use App\Models\DetalleAsistencia;
+use App\Models\Estudiante;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+
+// Métodos útiles de las librerías usadas:
+// Collection: get(), pluck(), sortBy(), flatMap(), unique(), filter(), map(), first(), where(), count(), each(), toArray(), all()
+// Request: all(), validate(), input(), has(), only(), except()
+// Eloquent Model: find(), findOrFail(), where(), get(), create(), save(), delete(), with(), orderBy(), first()
+// Auth: user()
+// Carbon: now(), parse(), format(), addDay(), subDay()
+// Otros: redirect()->back(), view(), compact()
+
+// Nota: El método correcto es flatMap, no flapMap.
 
 class AsistenciaController extends Controller
 {
@@ -21,7 +35,8 @@ class AsistenciaController extends Controller
          $rol = Auth::user()->roles->pluck('name')->implode(', ');
           $id_usuario = Auth::user()->id;
         if (($rol === 'ADMINISTRADOR/A')||($rol === 'DIRECTOR/A') ||($rol === 'SECRETARIO/A') ||($rol === 'ENCARGADO/A ACADEMICO')) {
-            return view('admin.asistencias.index');
+            $asignaciones = Asignacion::get();
+            return view('admin.asistencias.index', compact('asignaciones'));
 
          }
          if($rol === 'DOCENTE') {
@@ -61,7 +76,7 @@ class AsistenciaController extends Controller
        //return response()->json($datos);
        $request ->validate([
            'asignacion_id' => 'required',
-           'fecha' => 'required|date',
+           'fecha' => 'required|date|unique:asistencias,fecha',
            'observacion' => 'nullable|string|max:255',
            'estado_asistencia' => 'required',
        ]);
@@ -90,9 +105,23 @@ class AsistenciaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Asistencia $asistencia)
+    public function show($id)
     {
-        //
+      $asignacion = Asignacion::findOrFail($id);
+      $asistencias = Asistencia::with('detallesAsistencia')->where('asignacion_id', $id)
+      ->orderBy('fecha', 'desc')->get();
+
+      $estudiante_ids = $asistencias->flatMap(function ($asistencia) {
+          return $asistencia->detallesAsistencia->pluck('estudiante_id')->filter();
+      })->unique()->toArray();
+
+      $estudiantes = \App\Models\Estudiante::whereIn('id', $estudiante_ids)
+          ->orderBy('apellidos')
+          ->get();
+
+      $fechas = $asistencias->pluck('fecha')->unique()->sort();
+
+      return view('admin.asistencias.show', compact('asignacion', 'asistencias', 'estudiantes', 'fechas'));
     }
 
     /**

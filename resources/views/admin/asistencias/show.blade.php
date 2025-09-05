@@ -2,8 +2,7 @@
 
 
 @section('content_header')
-    <h1 style="font-weight: bold; font-size: 1.5rem">Listado General de Asistencias
-    </h1>
+    <h1 style="font-weight: bold; font-size: 1.5rem">Listado de Asistenicas de los Estdiantes:  Gestion:"{{$asignacion->gestion->nombre}}"/   Nivel:"{{$asignacion->nivel->nombre}}"/   Turno:"{{$asignacion->turno->nombre}}"/   Grado:"{{$asignacion->grado->nombre}}"/   Paralelo:"{{$asignacion->paralelo->nombre}}"/   Materia:"{{$asignacion->materia->nombre}}"</h1>
     <hr>
 @stop
 
@@ -13,7 +12,7 @@
             <div class="col-md-12">
                 <div class="card card-outline card-purple">
                     <div class="card-header">
-                        <h3 class="card-title">Lista de asistencias /Asignaciones Registradas</h3>
+                        <h3 class="card-title">Docente :{{$asignacion->personal->apellidos}}  {{$asignacion->personal->nombres}}</h3>
 
                     </div>
                     <!-- /.card-header -->
@@ -22,39 +21,22 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>Nr</th>
-                                    <th>Docente</th>
-                                    <th>Turno</th>
-                                    <th>Gestion</th>
-                                    <th>Nivel</th>
-                                    <th>Grado</th>
-                                    <th>Paralelo</th>
-                                    <th>Materia</th>
+                                    <th>Estudiante</th>
+                                    <th>Cedula</th>
+                                    @foreach ($asistencias->pluck ('fecha')->unique()->sort() as $fecha)
+                                    <th>{{ \carbon\Carbon::parse($fecha)->format('d-m-Y') }}<br></th>
+                                    @endforeach
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($asignaciones as $asignacion)
-                                    <tr class="text-center">
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $asignacion->personal->nombres }} {{ $asignacion->personal->apellidos }}</td>
-                                        <td>{{ $asignacion->turno->nombre }}</td>
-                                        <td>{{ $asignacion->gestion->nombre }}</td>
-                                        <td>{{ $asignacion->nivel->nombre }}</td>
-                                        <td>{{ $asignacion->grado->nombre }}</td>
-                                        <td>{{ $asignacion->paralelo->nombre }}</td>
-                                        <td>{{ $asignacion->materia->nombre }}</td>
-                                        <td>
-                                            <div class="row d-flex justify-content-center">
-                                                 <a href="{{ url('/admin/asistencias/asignacion/' .$asignacion->id ) }}"
-                                                    class="btn btn-success btn-sm">
-                                                    <i class="fas fa-list-alt"></i> Ver Asistencia
-                                                </a>
+                                @foreach ($estudiantes as $estudiante)
+                                <tr class="text-center">
+                                    <td>{{$loop->iteration}}</td>
 
-                                            </div>
 
-                                        </td>
-                                    </tr>
                                 @endforeach
+
                             </tbody>
                         </table>
                     </div>
