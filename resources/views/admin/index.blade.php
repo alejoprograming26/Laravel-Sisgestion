@@ -175,6 +175,35 @@
         </div>
     </div>
     @endcan
+      @can('admin.pagos.index')
+    <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box zoomP">
+            <img src="{{ url('/img/dinero.gif') }}" width="90px" alt="">
+            <div class="info-box-content">
+                <span class="info-box-text"><b>Pagos Registrados</b></span>
+                <span class="info-box-number" style="font-size:18pt">
+                    {{ $total_pagos }} Pagos
+                </span>
+            </div>
+        </div>
+    </div>
+    @endcan
+      @canany(['admin.matriculaciones.index', 'admin.pagos.index'])
+    <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box zoomP">
+            <img src="{{ url('/img/matri.gif') }}" width="90px" alt="">
+            <div class="info-box-content">
+                <span class="info-box-text"><b>Matriculas Registradas</b></span>
+                <span class="info-box-number" style="font-size:18pt">
+                    {{ $total_matriculas }} Matriculas
+                </span>
+            </div>
+        </div>
+    </div>
+    @endcan
+
+
+
 </div>
 <div class="row">
     <div class="col-md-6">
@@ -187,7 +216,16 @@
             </div>
         </div>
     </div>
-</div>
+    <div class="col-md-6">
+        <div class="card card-outline card-success">
+            <div class="card-header">
+                <h3 class="card-title">Total Pagos Matriculados por Mes</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="myChart2"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
 
 @stop
@@ -208,8 +246,8 @@
                 datasets: [{
                     label: 'Matriculas por gestion',
                     data: matriculas,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'green',
+                    backgroundColor: 'rgba(84, 162, 235, 0.2)',
+                    borderColor: 'rgba(170, 152, 295, 1)',
                     borderWidth: 2,
                     fill: true,
                     tension: 0.6
@@ -223,6 +261,31 @@
                 }
             }
         });
+        var meses =@json($meses);
+        var montos =@json($montos);
+        new Chart(document.getElementById('myChart2'), {
+            type: 'bar',
+            data: {
+                labels: meses,
+                datasets: [{
+                    label: 'Pagos por mes',
+                    data: montos,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
         console.log("Hi, I'm using the Laravel-AdminLTE package!");
     </script>
 @stop

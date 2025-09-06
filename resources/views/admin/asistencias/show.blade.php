@@ -7,6 +7,14 @@
 @stop
 
 @section('content')
+ <style>
+   .rotate-header {
+       writing-mode: vertical-rl;
+       transform: rotate(180deg);
+       text-align: center;
+       padding: 5px
+   }
+</style>
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
@@ -24,17 +32,41 @@
                                     <th>Estudiante</th>
                                     <th>Cedula</th>
                                     @foreach ($asistencias->pluck ('fecha')->unique()->sort() as $fecha)
-                                    <th>{{ \carbon\Carbon::parse($fecha)->format('d-m-Y') }}<br></th>
+                                    <th class="rotate-header" style="width: 35px;">{{ \carbon\Carbon::parse($fecha)->format('d-m-Y') }}<br></th>
                                     @endforeach
-                                    <th>Acciones</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($estudiantes as $estudiante)
                                 <tr class="text-center">
                                     <td>{{$loop->iteration}}</td>
+                                    <td>{{$estudiante->apellidos}} {{$estudiante->nombres}}</td>
+                                    <td>{{ $estudiante->ci}}</td>
+                                    @foreach ($fechas as $fecha)
+                                       @php
+                                        $asistencia = $asistencias->where('fecha', $fecha)->first();
+                                        if($asistencia){
+                                            $detalle = $asistencia->detallesAsistencia->where('estudiante_id', $estudiante->id)->first();
+                                            $estado = $detalle ? $detalle->estado_asistencia : 'No Registrado';
+                                        }else{
+                                            $estado='No registrado';
+                                        }
+                                        if($estado=='Presente'){
+                                            $estado = '<span class="badge bg-success">P</span>';
+                                        }elseif($estado=='Ausente'){
+                                            $estado = '<span class="badge bg-danger">A</span>';
+                                        }elseif($estado=='Tarde'){
+                                            $estado = '<span class="badge bg-warning">T</span>';
+                                        }elseif($estado=='Licencia'){
+                                            $estado = '<span class="badge bg-info">L</span>';
+                                        }
 
+                                       @endphp
+                                       <td>{!! $estado !!}</td>
+                                    @endforeach
 
+                                </tr>
                                 @endforeach
 
                             </tbody>
