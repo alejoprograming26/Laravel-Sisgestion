@@ -33,6 +33,7 @@
                                     <th>Materia</th>
                                     <th>Fecha Asistencia</th>
                                     <th>Criterio</th>
+                                    <th>Observacion</th>
 
 
                                 </tr>
@@ -44,7 +45,21 @@
                                     <td>{{$asignacion->personal->apellidos}} {{$asignacion->personal->nombres}}</td>
                                     <td>{{ $asignacion->materia->nombre}}</td>
                                     <td>{{ $asistencia->fecha }}</td>
-                                    <td>{{ $asistencia->criterio }}</td>
+                                    <td>
+                                        @foreach ($asistencia->detallesAsistencia as $detalle)
+
+                                                @if($detalle->estado_asistencia == 'Presente')
+                                                    <span class="badge badge-success">P</span>
+                                                @elseif($detalle->estado_asistencia == 'Ausente')
+                                                    <span class="badge badge-danger">A</span>
+                                                @elseif($detalle->estado_asistencia == 'Tarde')
+                                                    <span class="badge badge-warning">T</span>
+                                                @else
+                                                    <span class="badge badge-secondary">L</span>
+                                                @endif
+                                        @endforeach
+                                    </td>
+                                    <td>{{$asistencia->observacion}}</td>
                                 </tr>
                                 @endforeach
 

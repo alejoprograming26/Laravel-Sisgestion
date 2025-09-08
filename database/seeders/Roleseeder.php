@@ -150,6 +150,8 @@ class Roleseeder extends Seeder
     //Permisos Asistencias
       Permission::create(['name' => 'admin.asistencias.index'])->syncRoles([$admin, $docente, $estudiante]);
       Permission::create(['name' => 'admin.asistencias.create'])->syncRoles([$docente]);
+      Permission::create(['name' => 'admin.asistencias.show'])->syncRoles([$admin]);
+      Permission::create(['name' => 'admin.asistencias.show_estudiante'])->syncRoles([$estudiante]);
       Permission::create(['name' => 'admin.asistencias.store'])->syncRoles([$docente]);
       Permission::create(['name' => 'admin.asistencias.update'])->syncRoles([$docente]);
       Permission::create(['name' => 'admin.asistencias.destroy'])->syncRoles([$docente]);

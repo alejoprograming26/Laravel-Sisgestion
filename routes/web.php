@@ -141,8 +141,8 @@ Route::delete('/admin/pagos/{id}', [App\Http\Controllers\PagoController::class,'
 //Rutas Asistencias
 Route::get('/admin/asistencias', [App\Http\Controllers\AsistenciaController::class,'index'])->name('admin.asistencias.index')->middleware('auth', 'can:admin.asistencias.index');
 Route::get('/admin/asistencias/create/asignacion/{id}', [App\Http\Controllers\AsistenciaController::class,'create'])->name('admin.asistencias.create')->middleware('auth', 'can:admin.asistencias.create');
-Route::get('/admin/asistencias/asignacion/{id}', [App\Http\Controllers\AsistenciaController::class,'show'])->name('admin.asistencias.show')->middleware('auth');
-Route::get('/admin/asistencias/detalle/asignacion/{id_asignacion}/estudiante/{id_estudiante}', [App\Http\Controllers\AsistenciaController::class,'show_estudiante'])->name('admin.asistencias.show_estudiante')->middleware('auth');
+Route::get('/admin/asistencias/asignacion/{id}', [App\Http\Controllers\AsistenciaController::class,'show'])->name('admin.asistencias.show')->middleware('auth', 'can:admin.asistencias.show');
+Route::get('/admin/asistencias/detalle/asignacion/{id_asignacion}/estudiante/{id_estudiante}', [App\Http\Controllers\AsistenciaController::class,'show_estudiante'])->name('admin.asistencias.show_estudiante')->middleware('auth', 'can:admin.asistencias.show_estudiante');
 Route::post('/admin/asistencias/create', [App\Http\Controllers\AsistenciaController::class,'store'])->name('admin.asistencias.store')->middleware('auth', 'can:admin.asistencias.store');
 Route::put('/admin/asistencias/{id}', [App\Http\Controllers\AsistenciaController::class,'update'])->name('admin.asistencias.update')->middleware('auth', 'can:admin.asistencias.update');
 Route::delete('/admin/asistencias/{id}', [App\Http\Controllers\AsistenciaController::class,'destroy'])->name('admin.asistencias.destroy')->middleware('auth', 'can:admin.asistencias.destroy');
