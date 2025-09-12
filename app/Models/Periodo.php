@@ -17,4 +17,8 @@ class Periodo extends Model
     {
         return $this->belongsTo(Gestion::class);
     }
+    public function calificaciones()
+    {
+        return $this->hasMany(Calificacion::class);
+    }
 }

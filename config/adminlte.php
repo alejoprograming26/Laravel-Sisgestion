@@ -438,6 +438,14 @@ return [
           'classes' => 'bg-purple text-white',
           'icon' => 'fas fa-fw fa-user-check',
 
+        ],
+        [
+          'can'=> 'admin.calificaciones.index',
+          'text'=> 'Calificaciones',
+          'url' => 'admin/calificaciones',
+          'classes' => 'bg-purple text-white',
+          'icon' => 'fas fa-fw fa-graduation-cap',
+
         ]
 
 
