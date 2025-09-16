@@ -7,6 +7,42 @@
 @stop
 
 @section('content')
+ <div class="row">
+        @if(Auth::user()->roles->pluck('name')->implode(',')=='DOCENTE')
+            <div class="col-md-12">
+                <div class="card card-outline card-purple">
+                    <div class="card-header">
+                        <h3 class="card-title"><b>Datos del Docente</b></h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table  table-bordered table-striped table-hover table-sm table-primary">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Cedula</th>
+                                    <th>Fecha de Nacimiento</th>
+                                    <th>Telefono</th>
+                                    <th>Profesion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-center">
+                                    <td>{{ Auth::user()->personal->nombres }}</td>
+                                    <td>{{ Auth::user()->personal->apellidos }}</td>
+                                    <td>{{ Auth::user()->personal->ci }}</td>
+                                    <td>{{ Auth::user()->personal->fecha_nacimiento }}</td>
+                                    <td>{{ Auth::user()->personal->telefono }}</td>
+                                    <td>{{ Auth::user()->personal->profesion }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        @endif
+    </div>
+
 <div class="row">
     @can('admin.gestiones.index')
     <div class="col-md-3 col-sm-6 col-12">
@@ -201,6 +237,7 @@
         </div>
     </div>
     @endcan
+
 
 
 

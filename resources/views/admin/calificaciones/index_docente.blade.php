@@ -43,7 +43,7 @@
                                         <td>
                                             <div class="row d-flex justify-content-center">
                                                  <a href="{{ url('/admin/calificaciones/create/asignacion/' .$asignacion->id ) }}"
-                                                    class="btn btn-success btn-sm">
+                                                    class="btn btn-warning btn-sm">
                                                     <i class="fas fa-list-alt"></i> Ver Calificaiones
                                                 </a>
 

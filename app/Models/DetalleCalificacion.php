@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DetalleCalificacion extends Model
 {
     protected $fillable = [
-        'calificaion_id',
+        'calificacion_id', // <-- Corrección aquí
         'estudiante_id',
         'nota',
 

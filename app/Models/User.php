@@ -50,11 +50,11 @@ class User extends Authenticatable
     //Un usuario pertenece a un personal
     public function personal()
     {
-        return $this->hasOne(Personal::class);
+        return $this->hasOne(Personal::class, 'usuario_id');
     }
     //Un usuario pertenece a un estudiante
     public function estudiante()
     {
-        return $this->hasOne(Estudiante::class);
+        return $this->hasOne(Estudiante::class, 'usuario_id');
     }
 }

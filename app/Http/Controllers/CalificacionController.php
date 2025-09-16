@@ -10,7 +10,9 @@ use App\Models\User;
 use App\Models\Personal;
 use App\Models\Asignacion;
 use App\Models\Matriculacion;
+use App\Models\Periodo;
 use App\Models\DetalleAsistencia;
+use App\Models\DetalleCalificacion;
 use App\Models\Estudiante;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -70,9 +72,24 @@ class CalificacionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $asignacion = Asignacion::find($id);
+        $docente = Personal::where('usuario_id',  Auth::user()->id)->first(); //
+        $periodos = Periodo::where('gestion_id', $asignacion->gestion_id)
+        ->orderBy('id')
+        ->get();
+        $matriculados = Matriculacion::with('estudiante')->where('turno_id', $asignacion->turno_id)
+       ->where('gestion_id', $asignacion->gestion_id)
+       ->where('nivel_id', $asignacion->nivel_id)
+       ->where('grado_id', $asignacion->grado_id)
+       ->where('paralelo_id', $asignacion->paralelo_id)
+       ->get()
+       ->sortBy('estudiante.apellidos');
+
+       $calificaciones = Calificacion::with('detalleCalificaciones')->where('asignacion_id', $asignacion->id)->get();
+
+        return view('admin.calificaciones.create', compact('asignacion', 'docente', 'periodos','matriculados', 'calificaciones'));
     }
 
     /**
@@ -80,7 +97,34 @@ class CalificacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       // $datos =request()->all();
+        //return response()->json($datos);
+        $request->validate([
+            'asignacion_id' => 'required|exists:asignacions,id',
+            'periodo_id' => 'required|exists:periodos,id',
+            'tipo' => 'required|string|max:50',
+            'fecha' => 'required|date',
+            'descripcion' => 'nullable|string|max:255',
+            'nota' => 'required',
+        ]);
+        $calificacion = new Calificacion();
+        $calificacion->asignacion_id = $request->asignacion_id;
+        $calificacion->periodo_id = $request->periodo_id;
+        $calificacion->tipo = $request->tipo;
+        $calificacion->fecha = $request->fecha;
+        $calificacion->descripcion = $request->descripcion;
+        $calificacion->save();
+
+        foreach ($request->nota as $estudiante_id => $nota) {
+           DetalleCalificacion::create([
+                'calificacion_id' => $calificacion->id,
+                'estudiante_id' => $estudiante_id,
+                'nota' => $nota,
+            ]);
+        }
+        return redirect()->back()
+        ->with('mensaje', 'Calificación registrada exitosamente.')
+        ->with('icono', 'success');
     }
 
     /**
@@ -102,16 +146,49 @@ class CalificacionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Calificacion $calificacion)
+    public function update(Request $request, $id)
     {
-        //
+       // $datos =request()->all();
+        //return response()->json($datos);
+        
+         $request->validate([
+            'asignacion_id' => 'required|exists:asignacions,id',
+            'periodo_id' => 'required|exists:periodos,id',
+            'tipo' => 'required|string|max:50',
+            'fecha' => 'required|date',
+            'descripcion' => 'nullable|string|max:255',
+            'nota' => 'required',
+        ]);
+        $calificacion = Calificacion::find($id);
+        $calificacion->asignacion_id = $request->asignacion_id;
+        $calificacion->periodo_id = $request->periodo_id;
+        $calificacion->tipo = $request->tipo;
+        $calificacion->fecha = $request->fecha;
+        $calificacion->descripcion = $request->descripcion;
+        $calificacion->save();
+
+          foreach ($request->nota as $estudiante_id => $nota) {
+           DetalleCalificacion::updateOrCreate([
+                'calificacion_id' => $calificacion->id,
+                'estudiante_id' => $estudiante_id,
+            ], [
+                'nota' => $nota,
+            ]);
+        }
+        return redirect()->back()
+        ->with('mensaje', 'Calificación Actualizada exitosamente.')
+        ->with('icono', 'success');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Calificacion $calificacion)
+    public function destroy($id)
     {
-        //
+        $calificacion = Calificacion::find($id);
+        $calificacion->delete();
+        return redirect()->back()
+        ->with('mensaje', 'Calificación Eliminada exitosamente.')
+        ->with('icono', 'info');
     }
 }
